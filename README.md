@@ -1,0 +1,2 @@
+# hammbot
+Discord bot

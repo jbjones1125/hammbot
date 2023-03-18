@@ -39,11 +39,14 @@ def translate_url(url):
                 result = pytesseract.image_to_string(img, config='-l eng+fra+ita+deu+spa+jpn+jpn_vert+chi_sim')
                 im_translated = translator.translate(result, dest='english')
                 text = str(im_translated.text)
+                if text == '':
+                    text = "No text detected in image."
                 translations.append(text)
                 img.close()
             except urllib.error.HTTPError:
                 translations.append("Error: Invalid URL")
-
+    if not translations:
+        translations.append("No text detected in image.")
     return translations
 
 
@@ -54,4 +57,6 @@ def translate_image(img_bytes):
     im_translated = translator.translate(result, dest='english')
     text = str(im_translated.text)
     img.close()
+    if text == "":
+        text = "No text detected in image."
     return text

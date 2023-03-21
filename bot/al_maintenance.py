@@ -10,7 +10,7 @@ def getTweets(user, amount):
     for i, t in enumerate(scrape.TwitterSearchScraper('from:' + user).get_items()):
         if i > amount:
             break
-        tweets.append([t.date, t.sourceLabel, t.rawContent])
+        tweets.append([t.date, t.sourceLabel, t.rawContent, t.url])
     return tweets
 
 
@@ -35,7 +35,7 @@ def getStatus(tweets):
                 timezone.utc).astimezone()).total_seconds()
             hours = int(seconds / 3600)
             minutes = int(seconds % 3600 / 60)
-            return f"Maintenance extended - ends in {hours:02d}:{minutes:02d}"
+            return [f"Maintenance extended - ends in {hours:02d}:{minutes:02d}", tweet[3]]
 
         elif during in tweet[2] and (datetime.now(timezone.utc).astimezone() - timedelta(hours=1)) >= tweet[0]:
             '''
@@ -49,7 +49,7 @@ def getStatus(tweets):
             seconds = (end_time - datetime.now(timezone.utc).astimezone()).total_seconds()
             hours = int(seconds / 3600)
             minutes = int(seconds % 3600 / 60)
-            return f"Maintenance ends in {hours:02d}:{minutes:02d}"
+            return [f"Maintenance ends in {hours:02d}:{minutes:02d}", tweet[3]]
 
         elif start in tweet[2]:
             '''
@@ -66,7 +66,7 @@ def getStatus(tweets):
             seconds = (utcDate - datetime.now(timezone.utc).astimezone()).total_seconds()
             hours = int(seconds / 3600)
             minutes = int(seconds % 3600 / 60)
-            return f"Maintenance starts in {hours:02d}:{minutes:02d}"
+            return [f"Maintenance starts in {hours:02d}:{minutes:02d}", tweet[3]]
 
         else:
-            return "No maintenance"
+            return ["No maintenance", "https://twitter.com/AzurLane_EN"]

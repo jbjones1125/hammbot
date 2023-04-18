@@ -18,7 +18,8 @@ def getTweets(user, amount):
 
 
 def getStatus(tweets):
-    start = "We will start maintenance on"
+    # start = "We will start maintenance on"
+    start = "Please plan ahead for the scheduled server downtime."
     start2 = "Part 1"
     during = "Here's a 1-hour advance notification for the coming maintenance period"
     extend = "will need to extend the maintenance period"
@@ -62,7 +63,7 @@ def getStatus(tweets):
             maintenance date: create the date of maintenance from the given date, the time: 00:00:00, and timezone
             time till: convert to utc and subtract the current time from maintenance start time
             '''
-            date = tweet[2].split()[7].split('/')
+            date = tweet[2].split()[18].split('/')
             tz = pytz.timezone("America/Los_Angeles")
             maintenance_date = tz.localize(
                 datetime.strptime(f"{tweet[0].year}-{date[0]}-{date[1]} 00:00:00", "%Y-%m-%d %H:%M:%S"))

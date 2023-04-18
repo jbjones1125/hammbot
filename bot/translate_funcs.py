@@ -36,7 +36,7 @@ def translate_url(url):
                 img_from_url = urllib.request.urlopen(request_site)
                 img = Image.open(img_from_url)
                 # TODO: add support for all available languages
-                result = pytesseract.image_to_string(img, config='-l eng+fra+ita+deu+spa+jpn+jpn_vert+chi_sim')
+                result = pytesseract.image_to_string(img, config='-l eng+fra+ita+deu+spa+jpn+jpn_vert+chi_sim+kor+kor_vert --psm 6')
                 im_translated = translator.translate(result, dest='english')
                 text = str(im_translated.text)
                 if text == '':
